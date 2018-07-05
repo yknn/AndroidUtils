@@ -97,6 +97,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
+     * 各种事件回调、接口
+     */
+    protected void initEvent(){
+
+    }
+
+    /**
      * 关闭键盘
      */
     protected void setKeyClose(){
