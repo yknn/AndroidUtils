@@ -26,6 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             setButterKnife();
             initWidget();
             initData();
+            initEvent();
         } else {
             finish();
         }
