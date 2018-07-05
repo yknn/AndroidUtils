@@ -1,17 +1,16 @@
 package com.yuknn;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import java.util.List;
-
-import butterknife.ButterKnife;
-
 
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -20,11 +19,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // 在界面未初始化之前调用的初始化窗口
         initWidows();
-
         if (initArgs(getIntent().getExtras())) {
             // 得到界面Id并设置到Activity界面中
             int layId = getContentLayoutId();
             setContentView(layId);
+            setButterKnife();
             initWidget();
             initData();
         } else {
@@ -69,16 +68,25 @@ public abstract class BaseActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setKeyClose();
                 onBackPressed();
             }
         });
+    }
+
+
+    /**
+     * 设置ButterKnife
+     */
+    protected void setButterKnife(){
+//        butterknife.ButterKnife.bind(this);
     }
 
     /**
      * 初始化控件
      */
     protected void initWidget() {
-        ButterKnife.bind(this);
+
     }
 
     /**
@@ -88,6 +96,22 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * 关闭键盘
+     */
+    protected void setKeyClose(){
+
+    }
+
+    /**
+     * 关闭键盘
+     */
+    protected void closeKey(){
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+        }
+    }
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -117,5 +141,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         super.onBackPressed();
         finish();
+    }
+
+    public interface setToolbarBack {
+        int setToolbarId(int id);
     }
 }
